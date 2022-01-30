@@ -978,7 +978,7 @@ case "$enable_checking" in
 		CHECK_COMPILER_FLAG(Wdeclaration-after-statement, [ CFLAGS="$CFLAGS -Wdeclaration-after-statement" ])
 		;;
         no|*)
-                AC_DEFINE([NDEBUG], [], [Undefine this to enable internal runtime checks.])
+                #AC_DEFINE([NDEBUG], [], [Undefine this to enable internal runtime checks.])
                 ;;
 esac
 
