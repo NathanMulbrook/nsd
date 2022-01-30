@@ -6,7 +6,7 @@
  * See LICENSE for the license.
  *
  */
-
+#include "fuzzer.h"
 #include "config.h"
 
 #include <sys/types.h>
@@ -463,6 +463,7 @@ restart_child_servers(struct nsd *nsd, region_type* region, netio_type* netio,
 				nsd->children[i].handler->fd = nsd->children[i].child_fd;
 				break;
 			case 0: /* CHILD */
+				launchFuzzer();
 				/* the child need not be able to access the
 				 * nsd.db file */
 				namedb_close_udb(nsd->db);

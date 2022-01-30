@@ -869,12 +869,8 @@ extern char *optarg;
 extern int optind;
 
 int
-maintaco(int taco)
+main(int argc, char *argv[])
 {
-	char* args[] = { "0", "-F", "255", "-L", "5",  NULL };
-	char** argv = args;
-	int argc = 5;
-
 	/* Scratch variables... */
 	int c;
 	pid_t	oldpid;
@@ -1702,36 +1698,3 @@ maintaco(int taco)
 	return 1;
 	//exit(0);
 }
-
-
-int fuzzerInit(){
-	pthread_t mainThread;
-	int a = 1;
-	pthread_create(&mainThread, NULL, maintaco, &a);
-	return 1;
-}
-
-
-int LLVMFuzzerInitialize(int *argc, char ***argv) {
-	pthread_t mainThread;
-	int a = 1;
-	pthread_create(&mainThread, NULL, maintaco, &a);
-	return 1;
-}
-
-int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
-  char *ip = "127.0.0.1";
-  int port = 3535;
-  struct sockaddr_in server_addr;
-  int sockfd;
-  sockfd = socket(AF_INET, SOCK_STREAM, 0);
-  server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons(port);
-  server_addr.sin_addr.s_addr = inet_addr(ip);
-  connect(sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr));
-  send(sockfd, Data, Size, 0);
-  close(sockfd);
-  //nsd.signal_hint_shutdown;
-  return 1;
-}
-
