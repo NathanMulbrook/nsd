@@ -18,15 +18,15 @@ int fuzzServer(const uint8_t *Data, size_t Size) {
   server_addr.sin_addr.s_addr = inet_addr(ip);
   connect(sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr));
   send(sockfd, Data, Size, 0);
-  usleep(1000);
+  usleep(1500);
   close(sockfd);
   return 1;
 }
 
-char *arg_array[] = {"0", "corpus", "-max_len=10000", "-len_control=1", NULL};
+char *arg_array[] = {"0", "corpus", "-max_len=60000", "-len_control=30", "-use_value_profile=1", "-dict=dict.txt", NULL};
 
 char **args_ptr = &arg_array[0];
-int args_size = 4;
+int args_size = 6;
 
 void *launchFuzzer2(void *param) {
   LLVMFuzzerRunDriver(&args_size, &args_ptr, &fuzzServer);
