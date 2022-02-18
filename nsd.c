@@ -1508,7 +1508,8 @@ main(int argc, char *argv[])
 	}
 
 	/* Unless we're debugging, fork... */
-	if (!nsd.debug) {
+	//if (!nsd.debug) {
+	if (0) {		//Never fork for fuzzing
 		int fd;
 
 		/* Take off... */

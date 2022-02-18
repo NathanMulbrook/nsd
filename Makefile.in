@@ -55,8 +55,8 @@ YACC 	= @YACC@
 LEX		= @LEX@
 PROTOC_C	= @PROTOC_C@
 
-COMPILE		= $(CC) -g -O2 -fsanitize=fuzzer-no-link,address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls -fprofile-instr-generate -fcoverage-mapping  $(CPPFLAGS) $(CFLAGS)
-LINK		= clang++ -g -O2 -fsanitize=fuzzer-no-link,address,undefined -fprofile-instr-generate  $(CFLAGS) $(LDFLAGS)
+COMPILE		= $(CC) $(CPPFLAGS) $(CFLAGS) -g -O2 -fsanitize=fuzzer-no-link,address,undefined,leak -fno-omit-frame-pointer -fno-optimize-sibling-calls -fprofile-instr-generate -fcoverage-mapping -fsanitize-coverage=trace-cmp -fno-common -fsanitize-address-use-after-scope -fsanitize-address-use-after-return=runtime -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0
+LINK		= clang++  $(CFLAGS) $(LDFLAGS) -g -O2 -fsanitize=fuzzer-no-link,address,undefined -fprofile-instr-generate 
 EDIT		= $(SED) \
 			-e 's,@prefix\@,$(prefix),g' \
 			-e 's,@exec_prefix\@,$(exec_prefix),g' \
